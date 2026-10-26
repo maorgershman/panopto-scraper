@@ -34,8 +34,8 @@ const output = await Promise.all(
     }
 
     const result = await response.json();
-    const streamUrl = result.Delivery.Streams[0].StreamUrl;
-    const cleanUrl = new URL(streamUrl).origin + new URL(streamUrl).pathname;
+    const streamUrl = new URL(result.Delivery.PodcastStreams[0].StreamUrl);
+    const cleanUrl = streamUrl.origin + streamUrl.pathname;
 
     return [name, id, cleanUrl];
   })
@@ -47,7 +47,7 @@ const dir = await window.showDirectoryPicker({ mode: "readwrite" });
 
 for (let i = 0; i < output.length; i++) {
   const [name, , url] = output[i];
-  const filename = `הרצאה ${i + 1} - ${name}.mp4`;
+  const filename = `${name}.mp4`;
 
   console.log(`Downloading ${filename}...`);
 
